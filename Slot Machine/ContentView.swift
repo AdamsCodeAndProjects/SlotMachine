@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     let symbols = ["bell", "cherry", "coin", "grape", "seven", "strawberry"]
+    let haptics = UINotificationFeedbackGenerator()
     
     @State private var highscore: Int = UserDefaults.standard.integer(forKey: "HighScore")
     @State private var coins: Int = 100
@@ -33,6 +34,8 @@ struct ContentView: View {
         reels = reels.map({ _ in
             Int.random(in: 0...symbols.count - 1)
         })
+        playSound(sound: "spin", type: "mp3")
+        haptics.notificationOccurred(.success)
     }
     
     // Check the winning
@@ -43,6 +46,8 @@ struct ContentView: View {
             // New high score
             if coins > highscore {
                 newHighScore()
+            } else {
+                playSound(sound: "win", type: "mp3")
             }
         } else {
             // Player loses
@@ -59,6 +64,7 @@ struct ContentView: View {
         highscore = coins
         // Saves the high score until replaced
         UserDefaults.standard.set(highscore, forKey: "HighScore")
+        playSound(sound: "high-score", type: "mp3")
     }
     
     func playerLoses() {
@@ -69,18 +75,23 @@ struct ContentView: View {
         betAmount = 10
         isActiveBet10 = true
         isActiveBet20 = false
+        playSound(sound: "casino-chips", type: "mp3")
+        haptics.notificationOccurred(.success)
     }
     
     func activateBet20() {
         betAmount = 20
         isActiveBet20 = true
         isActiveBet10 = false
+        playSound(sound: "casino-chips", type: "mp3")
+        haptics.notificationOccurred(.success)
     }
     // Game is over
     func isGameOver() {
         if coins <= 0 {
             // Show modal window
             showingModal = true
+            playSound(sound: "game-over", type: "mp3")
         }
     }
     
@@ -89,6 +100,7 @@ struct ContentView: View {
         highscore = 0
         coins = 100
         activateBet10()
+        playSound(sound: "chimeup", type: "mp3")
     }
     
     
@@ -145,6 +157,7 @@ struct ContentView: View {
                             .animation(Animation.easeOut(duration: Double.random(in: 0.5...0.7)), value: animatingSymbol)
                             .onAppear(perform: {
                                 self.animatingSymbol.toggle()
+                                playSound(sound: "riseup", type: "mp3")
                             })
                     }
                     
