@@ -48,6 +48,44 @@ struct ContentView: View {
                     .modifier(ScoreContainerModifier())
                 }
                 
+                VStack(alignment: .center, spacing: 0) {
+                    ZStack {
+                        ReelView()
+                        Image("bell")
+                            .resizable()
+                            .modifier(ImageModifier())
+                    }
+                    
+                    HStack(alignment: .center, spacing: 0) {
+                        ZStack {
+                            ReelView()
+                            Image("seven")
+                                .resizable()
+                                .modifier(ImageModifier())
+                        }
+                        
+                        Spacer()
+                        
+                        ZStack {
+                            ReelView()
+                            Image("cherry")
+                                .resizable()
+                                .modifier(ImageModifier())
+                        }
+                    }
+                    .frame(maxWidth: 500)
+                    
+                    
+                    Button(action: {
+                        print("spin")
+                    }) {
+                        Image("spin")
+                            .renderingMode(.original)
+                            .resizable()
+                            .modifier(ImageModifier())
+                    }
+                }
+                
                 Spacer()
             }
             //-----------------------Top Buttons--------------------------------
