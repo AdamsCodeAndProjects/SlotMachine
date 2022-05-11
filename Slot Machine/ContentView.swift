@@ -11,17 +11,66 @@ struct ContentView: View {
     var body: some View {
         
         ZStack {
-            // --------------------Background-------------------------------
+            // -----------------------Background-------------------------------
             LinearGradient(gradient: Gradient(colors: [Color("ColorPink"), Color("ColorPurple")]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
-            // --------------------Interface--------------------------------
+            // ------------------------Interface--------------------------------
             VStack(alignment: .center, spacing: 5) {
                 LogoView()
                 
                 Spacer()
+                
+                // --------------------Score------------------------------
+                HStack {
+                    HStack {
+                        Text("Your\nCoins".uppercased())
+                            .scoreLabelStyle() // extension with added styling
+                            .multilineTextAlignment(.trailing)
+                        
+                        Text("100")
+                            .scoreNumberStyle() // Another extension
+                            .modifier(ScoreNumberModifier())
+                    }
+                    .modifier(ScoreContainerModifier())
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Text("200")
+                            .scoreNumberStyle() // Another extension
+                            .modifier(ScoreNumberModifier())
+                        
+                        Text("High\nScore".uppercased())
+                            .scoreLabelStyle() // extension with added styling
+                            .multilineTextAlignment(.leading)
+                    }
+                    .modifier(ScoreContainerModifier())
+                }
+                
+                Spacer()
             }
-            //----------------------Buttons------------------------------
+            //-----------------------Top Buttons--------------------------------
+            .overlay(
+                Button(action: {
+                    print("Reset the game")
+                }) {
+                    Image(systemName: "arrow.2.circlepath.circle")
+                }
+                    .font(.title)
+                    .accentColor(Color.white), alignment: .topLeading
+            )
+            .overlay(
+                Button(action: {
+                    print("Info View")
+                }) {
+                    Image(systemName: "info.circle")
+                }
+                    .font(.title)
+                    .accentColor(Color.white), alignment: .topTrailing
+            )
+            .padding()
+            .frame(maxWidth: 720)
         }
     }
 }
