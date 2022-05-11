@@ -87,6 +87,46 @@ struct ContentView: View {
                 }
                 
                 Spacer()
+                
+                HStack {
+                    // Bet
+                    HStack(alignment: .center, spacing: 10) {
+                        Button(action: {
+                            print("Bet 20")
+                        }) {
+                            Text("20")
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color.white)
+                                .modifier(BetNumberModifier())
+                        }
+                        
+                        .modifier(BetCapsuleModifier())
+                        
+                        Image("casino-chips")
+                            .resizable()
+                            .opacity(0)
+                            .modifier(CasinoChipsModifier())
+                    }
+                    
+                    HStack(alignment: .center, spacing: 10) {
+                        Image("casino-chips")
+                            .resizable()
+                            .opacity(1)
+                            .modifier(CasinoChipsModifier())
+                        Button(action: {
+                            print("Bet 10")
+                        }) {
+                            Text("10")
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color.yellow)
+                                .modifier(BetNumberModifier())
+                        }
+                        
+                        .modifier(BetCapsuleModifier())
+                        
+                        
+                    }
+                }
             }
             //-----------------------Top Buttons--------------------------------
             .overlay(
